@@ -83,9 +83,12 @@ export default class PlotlyGraph extends Component {
         const gd = document.getElementById(id);
 
         gd.on('plotly_click', (eventData) => {
-            const clickData = filterEventData(gd, eventData, 'click');
-            if (!isNil(clickData)) {
-                if (setProps) setProps({clickData});
+            const clickDataPre = filterEventData(gd, eventData, 'click');
+            if (!isNil(clickDataPre)) {
+                if (setProps){
+                                const clickData = Object.assign({}, clickDataPre, {time: Date.now()});
+                                setProps({clickData});
+                                }
                 if (fireEvent) fireEvent({event: 'click'});
             }
         });
